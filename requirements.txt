@@ -1,5 +1,5 @@
-opencv-python
-tqdm
-torch
-torchvision
-matplotlib
+opencv-python==4.8.1.78
+torch==2.1.0
+torchvision==0.16.0
+matplotlib====3.7.3
+gdown==4.7.1
