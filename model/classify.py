@@ -3,10 +3,11 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 import torch
 from PIL import Image
+import numpy as np
 
 
 class PassportClassifier:
-    def __init__(self, model_path='passport_classifier_12.pth'):
+    def __init__(self, model_path='passport_classifier.pth'):
         self.model = models.resnet101(pretrained=False)
         num_features = self.model.fc.in_features
         self.model.fc = nn.Linear(num_features, 2)
@@ -15,9 +16,12 @@ class PassportClassifier:
         
     @torch.no_grad()
     def classify(self, img):
+        if isinstance(img, np.ndarray):
+            img = Image.fromarray(img)
         
-        pil_img = Image.fromarray(img)
-        image = pil_img.resize((224, 224))
+        if img.mode == "RGBA":
+            img = img.convert("RGB")
+        image = img.resize((224, 224))
         transform = transforms.ToTensor()
         image_tensor = transform(image)
         image_tensor = image_tensor.unsqueeze(0)
