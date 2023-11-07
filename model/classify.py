@@ -1,24 +1,16 @@
 import torchvision.models as models
 import torch.nn as nn
 import torchvision.transforms as transforms
-import os.path as osp
-import re
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
 import torch
-import os
-
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 
 class PassportClassifier:
-    def __init__(self, pth_device='cpu', model_path='passport_classifier_12.pth'):
-        self.device = pth_device
+    def __init__(self, model_path='passport_classifier_12.pth'):
         self.model = models.resnet101(pretrained=False)
         num_features = self.model.fc.in_features
         self.model.fc = nn.Linear(num_features, 2)
-        self.model.load_state_dict(torch.load(model_path))
+        self.model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
         self.model.eval()
         
     @torch.no_grad()
