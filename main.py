@@ -1,9 +1,6 @@
 import argparse
 import os
-import os.path as osp
-
 import cv2
-from tqdm import tqdm
 from model.classify import PassportClassifier
 
 
@@ -14,7 +11,7 @@ def save_img(save_dir, img_name, img):
 
 def main(config):
 
-    classifier = PassportClassifier(pth_device='cpu')
+    classifier = PassportClassifier()
 
     if os.path.isfile(config.images_path):
         img_paths = [config.images_path]
@@ -31,7 +28,6 @@ def main(config):
             res[pred] += 1
         else:
             res[pred] = 1
-
     print(res)
     
 
