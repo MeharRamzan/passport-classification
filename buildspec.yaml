@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  build:
+    commands:
+
+      - echo "Fetch only secret"
+      - aws secretsmanager get-secret-value --secret-id rotation-classifier --query SecretString --output text > ssh.txt      
+      - chmod 600 ssh.txt
+
+      - echo "Fetching IP address from Secret Manager"
+      - export INSTANCE_IP=$(aws secretsmanager get-secret-value --secret-id rotation-classifier-ip --query SecretString --output text | jq -r .ip)
+
+
+      - echo "Connecting to EC2 instance and running script"
+      - ssh -i ssh.txt -o StrictHostKeyChecking=no ubuntu@$INSTANCE_IP "sudo su -c 'bash /home/ubuntu/script.sh'"
