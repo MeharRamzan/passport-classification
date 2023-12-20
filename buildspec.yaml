@@ -12,4 +12,4 @@ phases:
       - echo $INSTANCE_IP
 
       - echo "Connecting to EC2 instance and running script"
-      - ssh -i ssh.txt -o StrictHostKeyChecking=no ubuntu@$INSTANCE_IP "sudo su -c 'bash /home/ubuntu/script.sh'"
+      - ssh -i ssh.txt -o StrictHostKeyChecking=no ubuntu@$INSTANCE_IP "bash /home/ubuntu/script.sh"
