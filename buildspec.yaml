@@ -8,7 +8,7 @@ phases:
       - chmod 600 ssh.txt
       - cat ssh.txt
       - echo "Fetching IP address from Secret Manager"
-      - export INSTANCE_IP=$(aws secretsmanager get-secret-value --secret-id rotation-classifier-ip --query SecretString --output text | jq -r .ip)
+      - export INSTANCE_IP=$(aws secretsmanager get-secret-value --secret-id rotation-classifier-ip --query SecretString --output text )
       - echo $INSTANCE_IP
 
       - echo "Connecting to EC2 instance and running script"
